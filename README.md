@@ -39,7 +39,7 @@ Setting the chapters is just as simple:
     require 'chapter'
     chapters = [{"title"=>"Introduction", "duration"=>12325},
       {"title"=>"Discussion", "duration"=>655325}]
-    Chapters.set_chapters("/path/fo/file.m4a", chapters)
+    Chapter.set_chapters("/path/fo/file.m4a", chapters)
 **CAUTON**: `set_chapters` will overwrite any existing chapters in the file.
 
 ##Copyright
