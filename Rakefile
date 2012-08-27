@@ -17,30 +17,15 @@ Jeweler::Tasks.new do |gem|
   gem.name = "chapter"
   gem.homepage = "http://github.com/pascalj/chapter"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{Read and write chapters of mp4 files}
+  gem.description = %Q{This very simple gem uses the mp4v2 C library to read and set the chapters of mp4 files.}
   gem.email = "mail@pascal-jungblut.com"
   gem.authors = ["Pascal Jungblut"]
+  gem.files = Dir.glob('lib/**/*.rb') + Dir.glob('ext/**/*.{c,h,rb}')
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
 
-require 'rake/testtask'
-Rake::TestTask.new(:test) do |test|
-  test.libs << 'lib' << 'test'
-  test.pattern = 'test/**/test_*.rb'
-  test.verbose = true
-end
-
-require 'rcov/rcovtask'
-Rcov::RcovTask.new do |test|
-  test.libs << 'test'
-  test.pattern = 'test/**/test_*.rb'
-  test.verbose = true
-  test.rcov_opts << '--exclude "gems/*"'
-end
-
-task :default => :test
 
 require 'rdoc/task'
 Rake::RDocTask.new do |rdoc|
