@@ -24,17 +24,17 @@ rb_get_chapters(VALUE self, VALUE path) {
     VALUE result = rb_ary_new();
     for (i = 0; i < chapterCount; ++i)
     {
-    	VALUE chapter = rb_hash_new();
-        // print the infos
-	rb_hash_aset(chapter, rb_str_new2("title"), rb_str_new2(chapters[i].title));
-	rb_hash_aset(chapter, rb_str_new2("duration"), INT2NUM(chapters[i].duration));
-	rb_hash_aset(chapter, rb_str_new2("position"), INT2NUM(pos));
-	rb_ary_push(result, chapter);
-	pos = pos + chapters[i].duration;
-
+      VALUE chapter = rb_hash_new();
+      // print the infos
+      rb_hash_aset(chapter, rb_str_new2("title"), rb_str_new2(chapters[i].title));
+      rb_hash_aset(chapter, rb_str_new2("duration"), INT2NUM(chapters[i].duration));
+      rb_hash_aset(chapter, rb_str_new2("position"), INT2NUM(pos));
+      rb_ary_push(result, chapter);
+      pos = pos + chapters[i].duration;
     }
     // free up the memory
     MP4Free(chapters);
+    MP4Close(file);
     return result;
 }
 
@@ -50,16 +50,17 @@ rb_set_chapters(VALUE self, VALUE path, VALUE chapters) {
     uint32_t chapter_len = RARRAY_LEN(chapters);
     uint32_t i;
     MP4Chapter_t newChapters[chapter_len]; 
+    MP4Chapter_t *chapter = malloc(sizeof(MP4Chapter_t));
     for (i = 0; i < chapter_len; i++) {
 
         VALUE duration = rb_hash_aref(rb_ary_entry(chapters, i), rb_str_new2("duration"));
         VALUE title = rb_hash_aref(rb_ary_entry(chapters, i), rb_str_new2("title"));
 
-        MP4Chapter_t *chapter = malloc(sizeof(MP4Chapter_t));
         chapter->duration = NUM2UINT(duration);
         strcpy(chapter->title, StringValuePtr(title));
         newChapters[i] = *chapter;
     }
+    free(chapter);
 
     MP4SetChapters(file, &newChapters[0], chapter_len, MP4ChapterTypeQt);
     MP4Close(file);
