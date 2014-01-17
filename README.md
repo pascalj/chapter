@@ -29,7 +29,7 @@ Or add the gem to your `Gemfile`:
 
 ```ruby
 require 'chapter'
-chapters = Chapter.chapters('/path/to/file.m4a')
+chapters = MP4v2::Chapter.chapters('/path/to/file.m4a')
 ```
     
 `chapters` will be an array of hashes. Each hash represents a chapter with its position and duration (both in microseconds) and its title.
@@ -51,7 +51,7 @@ chapters = [
     {"title"=>"Introduction", "duration"=>12325},
     {"title"=>"Discussion", "duration"=>655325}
 ]
-Chapter.set_chapters("/path/fo/file.m4a", chapters)
+MP4v2::Chapter.set_chapters("/path/fo/file.m4a", chapters)
 ```
 **CAUTION**: `set_chapters` will overwrite any existing chapters in the file.
 
