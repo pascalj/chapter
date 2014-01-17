@@ -69,7 +69,8 @@ rb_set_chapters(VALUE self, VALUE path, VALUE chapters) {
 
 /* ruby calls this to load the extension */
 void Init_chapter(void) {
-    VALUE klass = rb_define_class("Chapter", rb_cObject);
+    VALUE mp4v2 = rb_define_module("MP4v2");
+    VALUE klass = rb_define_class_under(mp4v2,"Chapter", rb_cObject);
     rb_define_singleton_method(klass, "chapters", rb_get_chapters, 1);
     rb_define_singleton_method(klass, "set_chapters", rb_set_chapters, 2);
 }
